@@ -80,6 +80,7 @@ def detect_active_game() -> str:
         "resident evil 2 remake": "Resident Evil 2 Remake",
         "re2": "Resident Evil 2 Remake",
         "monster hunter": "Monster Hunter World",
+        "monsterhunterworld": "Monster Hunter World",
         "monster hunter world": "Monster Hunter World",
         "mhworld": "Monster Hunter World",
         "mafiadef": "Mafia 2 Definitive",
