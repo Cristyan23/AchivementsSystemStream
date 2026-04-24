@@ -480,6 +480,14 @@
         .waiting-screen.hidden {
             display: none;
         }
+        
+        .site-container {
+            display: block;
+        }
+        
+        .site-container.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -510,7 +518,7 @@
     </div>
     
     <!-- Site Completo -->
-    <div class="site-container">
+    <div class="site-container hidden">
         <!-- Header -->
         <header class="site-header">
             <div class="site-logo"><img id="user-avatar" src="https://avatars.steamstatic.com/933860e5e7817b0fcb301f52c49fe266328fec3d_full.jpg" alt="Avatar"></div>
@@ -687,12 +695,12 @@
                 
                 if (game.name) {
                     waitingScreen.classList.add('hidden');
-                    siteContainer.style.display = 'block';
+                    siteContainer.classList.remove('hidden');
                     if (data.achievements) render(data);
                     document.getElementById('game-name').textContent = game.name;
                 } else {
                     waitingScreen.classList.remove('hidden');
-                    siteContainer.style.display = 'none';
+                    siteContainer.classList.add('hidden');
                 }
             } catch(e) {}
         }
