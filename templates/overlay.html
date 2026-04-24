@@ -574,6 +574,7 @@
         let start = Math.floor(Date.now() / 1000);
         let queue = [];
         let showing = false;
+        let wasPlaying = false;
         
         // Som estilo PS5
         function playTone(freq, delay, dur) {
@@ -693,14 +694,21 @@
                 const waitingScreen = document.getElementById('waiting-screen');
                 const siteContainer = document.querySelector('.site-container');
                 
-                if (game.name) {
+                const isPlaying = !!game.name;
+                
+                if (isPlaying) {
                     waitingScreen.classList.add('hidden');
                     siteContainer.classList.remove('hidden');
                     if (data.achievements) render(data);
                     document.getElementById('game-name').textContent = game.name;
+                    wasPlaying = true;
                 } else {
                     waitingScreen.classList.remove('hidden');
                     siteContainer.classList.add('hidden');
+                    if (wasPlaying) {
+                        wasPlaying = false;
+                        location.reload();
+                    }
                 }
             } catch(e) {}
         }

@@ -183,6 +183,9 @@ def load_achievements():
     if detected:
         current_game = detected
         current_appid = get_appid_for_game(detected)
+    else:
+        current_game = None
+        current_appid = None
 
     api_key = config.get("steam_api_key", "")
     steam_id = config.steam_id
