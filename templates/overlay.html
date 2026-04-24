@@ -391,9 +391,100 @@
             background: #2a475e;
             border-radius: 5px;
         }
+        
+        /* Waiting Screen */
+        .waiting-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f151c 0%, #1b2838 50%, #0f151c 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
+        
+        .waiting-screen.hidden {
+            display: none;
+        }
+        
+        .waiting-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid #66c0f4;
+            background: linear-gradient(135deg, #3b5368 0%, #203040 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 60px rgba(102, 192, 244, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(102, 192, 244, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 80px rgba(102, 192, 244, 0.6); }
+        }
+        
+        .waiting-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .waiting-subtext {
+            font-size: 18px;
+            color: #66c0f4;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .waiting-game-hint {
+            margin-top: 40px;
+            padding: 16px 32px;
+            background: rgba(42,71,94,0.4);
+            border: 1px solid #2a475e;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #8f98a0;
+        }
+        
+        .game-screen {
+            display: none;
+        }
+        
+        .game-screen.visible {
+            display: block;
+        }
+        
+        .waiting-screen.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Waiting Screen -->
+    <div class="waiting-screen" id="waiting-screen">
+        <div class="waiting-logo">🎮</div>
+        <div class="waiting-text">Esperando Você Dar o Play!</div>
+        <div class="waiting-subtext">Inicie um jogo para ver as conquistas</div>
+        <div class="waiting-game-hint">支持的 jogos: GTA San Andreas, PRAGMATA, Monster Hunter World, Resident Evil 2 e mais...</div>
+    </div>
+    
     <!-- Popup -->
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -428,7 +519,7 @@
         </header>
         
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content game-screen" id="game-screen">
             <!-- Game Card -->
             <div class="game-card">
                 <div class="game-icon">🎮</div>
@@ -585,8 +676,18 @@
                 const data = await dataRes.json();
                 const game = await gameRes.json();
                 
-                if (data.achievements) render(data);
-                document.getElementById('game-name').textContent = game.name || 'Selecione um jogo';
+                const waitingScreen = document.getElementById('waiting-screen');
+                const siteContainer = document.querySelector('.site-container');
+                
+                if (game.name) {
+                    waitingScreen.classList.add('hidden');
+                    siteContainer.style.display = 'block';
+                    if (data.achievements) render(data);
+                    document.getElementById('game-name').textContent = game.name;
+                } else {
+                    waitingScreen.classList.remove('hidden');
+                    siteContainer.style.display = 'none';
+                }
             } catch(e) {}
         }
         
