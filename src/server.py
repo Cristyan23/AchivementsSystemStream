@@ -76,6 +76,15 @@ def detect_active_game() -> str:
         "dota": "Dota 2",
         "pubg": "PUBG",
         "apex": "Apex Legends",
+        "resident evil 2": "Resident Evil 2 Remake",
+        "resident evil 2 remake": "Resident Evil 2 Remake",
+        "re2": "Resident Evil 2 Remake",
+        "monster hunter": "Monster Hunter World",
+        "monster hunter world": "Monster Hunter World",
+        "mhworld": "Monster Hunter World",
+        "mafiadef": "Mafia 2 Definitive",
+        "mafia definitive": "Mafia 2 Definitive",
+        "mafia 2": "Mafia 2 Definitive",
     }
     try:
         result = subprocess.run(["tasklist"], capture_output=True, text=True, timeout=5)
@@ -106,6 +115,9 @@ def get_appid_for_game(game_name: str) -> str:
         "Celeste": "504230",
         "Counter-Strike 2": "730",
         "Dota 2": "570",
+        "Resident Evil 2 Remake": "883710",
+        "Monster Hunter World": "582010",
+        "Mafia 2 Definitive": "1349010",
     }
     return game_appids.get(game_name, "")
 

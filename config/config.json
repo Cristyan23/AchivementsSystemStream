@@ -4,7 +4,7 @@
   "steam_username": "FanfasMestre",
   "http_port": 5000,
   "ws_port": 8765,
-  "poll_interval": 10,
+  "poll_interval": 2,
   "cache_dir": "cache",
   "webhook_url": "",
   "webhook_rarity_threshold": "rare",
