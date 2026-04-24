@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tracker Control</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 15px;
+            min-width: 280px;
+        }
+        
+        h2 {
+            color: #66c0f4;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .stat-box {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #0f3460;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label { color: #888; font-size: 12px; }
+        .stat-value { font-size: 18px; font-weight: bold; color: #66c0f4; }
+        
+        .session-count { color: #4ade80; font-size: 24px; }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        
+        button:hover { background: #ff6b6b; }
+        
+        .game-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            background: #0f3460;
+            border: 1px solid #16213e;
+            border-radius: 4px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .input-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🏆 Achievement Tracker</h2>
+    
+    <div class="stat-box">
+        <div class="stat-row">
+            <span class="stat-label">Session</span>
+            <span class="stat-value session-count" id="session-count">+0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Total Unlocked</span>
+            <span class="stat-value" id="total-count">0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Locked</span>
+            <span class="stat-value" id="locked-count">0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Session Time</span>
+            <span class="stat-value" id="session-time">00:00</span>
+        </div>
+    </div>
+    
+    <button onclick="resetSession()">🔄 Reset Session</button>
+    
+    <div class="game-info">
+        <p>Game: <span id="game-name">Detecting...</span></p>
+        <p>Last Update: <span id="last-update">--:--</span></p>
+    </div>
+    
+    <script>
+        const sessionStartTime = Math.floor(Date.now() / 1000);
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+        }
+        
+        async function resetSession() {
+            if (!confirm('Reset session counter?')) return;
+            
+            try {
+                await fetch('/session/reset', { method: 'POST' });
+                location.reload();
+            } catch (e) {
+                alert('Error resetting session');
+            }
+        }
+        
+        async function updateStats() {
+            try {
+                const [dataRes, sessionRes, gameRes] = await Promise.all([
+                    fetch('/data'),
+                    fetch('/session'),
+                    fetch('/game')
+                ]);
+                
+                const data = await dataRes.json();
+                const session = await sessionRes.json();
+                const game = await gameRes.json();
+                
+                const total = data.total || 0;
+                const unlocked = data.unlocked || 0;
+                const locked = data.locked || 0;
+                
+                document.getElementById('session-count').textContent = '+' + (session.count || 0);
+                document.getElementById('total-count').textContent = unlocked;
+                document.getElementById('locked-count').textContent = locked;
+                document.getElementById('game-name').textContent = game.name || 'None';
+                document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+                
+            } catch (e) {
+                console.error('Error:', e);
+            }
+        }
+        
+        setInterval(() => {
+            const elapsed = Math.floor(Date.now() / 1000) - sessionStartTime;
+            document.getElementById('session-time').textContent = formatTime(elapsed);
+        }, 1000);
+        
+        updateStats();
+        setInterval(updateStats, 2000);
+    </script>
+</body>
+</html>

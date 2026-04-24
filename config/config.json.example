@@ -1,0 +1,14 @@
+{
+  "steam_id": "YOUR_STEAM_ID_64",
+  "http_port": 5000,
+  "ws_port": 8765,
+  "poll_interval": 5,
+  "cache_dir": "cache",
+  "webhook_url": "http://localhost:8080/webhook",
+  "webhook_rarity_threshold": "rare",
+  "game_data_path": "",
+  "theme": {
+    "primary_color": "#1b2838",
+    "accent_color": "#66c0f4"
+  }
+}

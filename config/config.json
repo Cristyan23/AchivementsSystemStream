@@ -1,0 +1,16 @@
+{
+  "steam_id": "76561199078810349",
+  "steam_api_key": "A2879F5E2141B4BF2CC114632A121143",
+  "steam_username": "FanfasMestre",
+  "http_port": 5000,
+  "ws_port": 8765,
+  "poll_interval": 10,
+  "cache_dir": "cache",
+  "webhook_url": "",
+  "webhook_rarity_threshold": "rare",
+  "game_data_path": "",
+  "theme": {
+    "primary_color": "#1b2838",
+    "accent_color": "#66c0f4"
+  }
+}

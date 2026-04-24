@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement Popup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: -450px;
+            width: 400px;
+            background: linear-gradient(135deg, rgba(26,40,56,0.95) 0%, rgba(15,21,28,0.95) 100%);
+            border: 2px solid #66c0f4;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 40px rgba(102, 192, 244, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: right 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 99999;
+        }
+        
+        .popup.show {
+            right: 20px;
+        }
+        
+        .popup-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .popup-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #a4d007 0%, #7eb300 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 4px 20px rgba(164, 208, 7, 0.5);
+            animation: iconPulse 0.5s ease-out;
+        }
+        
+        @keyframes iconPulse {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .popup-text {
+            flex: 1;
+        }
+        
+        .popup-title {
+            font-size: 14px;
+            color: #8f98a0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        
+        .popup-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .popup-desc {
+            font-size: 16px;
+            color: #a4d007;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        
+        .popup-progress {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(102, 192, 244, 0.3);
+            font-size: 14px;
+            color: #8f98a0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .progress-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a4d007, #7eb300);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        
+        .close-btn {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <button class="close-btn" onclick="window.close()">×</button>
+    
+    <div class="popup" id="popup">
+        <div class="popup-header">
+            <div class="popup-icon" id="popup-icon">🏆</div>
+            <div class="popup-text">
+                <div class="popup-title">Achievement Unlocked</div>
+                <div class="popup-name" id="popup-name">Achievement Name</div>
+            </div>
+        </div>
+        <div class="popup-desc" id="popup-desc">Achievement unlocked!</div>
+        <div class="popup-progress">
+            <span id="popup-progress">11 of 35 Achievements</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 31%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let queue = [];
+        let isShowing = false;
+        
+        function showAchievement(name, description, unlocked, total) {
+            queue.push({name, description, unlocked, total});
+            processQueue();
+        }
+        
+        function processQueue() {
+            if (isShowing || queue.length === 0) return;
+            
+            isShowing = true;
+            const item = queue.shift();
+            
+            const popup = document.getElementById('popup');
+            document.getElementById('popup-name').textContent = item.name;
+            document.getElementById('popup-desc').textContent = item.description || 'Achievement unlocked!';
+            document.getElementById('popup-progress').textContent = `${item.unlocked} of ${item.total} Achievements`;
+            document.getElementById('progress-fill').style.width = `${(item.unlocked / item.total) * 100}%`;
+            
+            // Reset animation
+            const icon = document.getElementById('popup-icon');
+            icon.style.animation = 'none';
+            setTimeout(() => icon.style.animation = 'iconPulse 0.5s ease-out', 10);
+            
+            // Play sound
+            playSound();
+            
+            popup.classList.add('show');
+            
+            setTimeout(() => {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    isShowing = false;
+                    processQueue();
+                }, 600);
+            }, 4000);
+        }
+        
+        function playSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                [523, 659, 784, 1047].forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.frequency.value = freq;
+                    osc.type = 'sine';
+                    gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.1);
+                    gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + i * 0.1 + 0.05);
+                    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + i * 0.1 + 0.15);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + i * 0.1);
+                    osc.stop(ctx.currentTime + i * 0.1 + 0.2);
+                });
+            } catch(e) {}
+        }
+        
+        // Listen for achievement updates
+        let lastData = '';
+        
+        async function checkAchievements() {
+            try {
+                const res = await fetch('http://localhost:5000/data');
+                const data = await res.json();
+                
+                if (data.last_update !== lastData && data.achievements) {
+                    lastData = data.last_update;
+                    
+                    let unlocked = 0;
+                    let total = 0;
+                    let latestName = '';
+                    let latestDesc = '';
+                    
+                    for (const [key, ach] of Object.entries(data.achievements)) {
+                        total++;
+                        if (ach.unlocked) {
+                            unlocked++;
+                            latestName = ach.name;
+                            latestDesc = ach.description;
+                        }
+                    }
+                    
+                    if (unlocked > 0) {
+                        showAchievement(latestName, latestDesc, unlocked, total);
+                    }
+                }
+            } catch(e) {}
+            
+            setTimeout(checkAchievements, 3000);
+        }
+        
+        checkAchievements();
+    </script>
+</body>
+</html>

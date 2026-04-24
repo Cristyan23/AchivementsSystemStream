@@ -1,0 +1,14 @@
+{
+  "3357650": {
+    "1": {"name": "Rendezvous", "description": "Encontre a Pragmata"},
+    "2": {"name": "Power Trip", "description": "Derrote o primeiro chefe"},
+    "3": {"name": "The Purr-fect Guide", "description": "Encontre todos os gatos"},
+    "4": {"name": "Another Pragmata", "description": "Complete o jogo"},
+    "5": {"name": "Entrusted Memory", "description": "Recupere a memória"},
+    "6": {"name": "Mission Unveiled", "description": "Complete a missão"},
+    "7": {"name": "Awakening", "description": "Desperte o poder"},
+    "8": {"name": "Sentinel Breach", "description": "Invada a fortaleza"},
+    "9": {"name": "Feline Friend", "description": "Colete 10 gatos"},
+    "10": {"name": "Cat Collector", "description": "Colete todos os gatos"}
+  }
+}

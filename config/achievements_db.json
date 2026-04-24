@@ -1,0 +1,24 @@
+{
+  "12420": {
+    "name": "GTA San Andreas",
+    "achievements": [
+      {"api_name": "smash_100_crates", "name": "Crate Smasher", "description": "Smash 100 crates"},
+      {"api_name": "earn_1000_dollars", "name": "Greedy Grob", "description": "Earn $1000"},
+      {"api_name": "first_waste", "name": "Tagged On", "description": "Tag 1 location"},
+      {"api_name": "pay_rainbow_fare", "name": "Chinese Princess", "description": "Complete a chariot race"},
+      {"api_name": "beat_cop_mia", "name": "Mile High Club", "description": "Complete flight school"},
+      {"api_name": "mount_apache", "name": "Flight School", "description": "Complete flight school"},
+      {"api_name": "bike_school", "name": "Bike Racer", "description": "Complete bike school"},
+      {"api_name": "car_lot_1", "name": "Car Broker", "description": "export 5 cars"}
+    ]
+  },
+  "367520": {
+    "name": "Hollow Knight",
+    "achievements": [
+      {"api_name": "FALSE_KNIGHT", "name": "False Knight", "description": "Defeat the False Knight"},
+      {"api_name": "HORNET_1", "name": "Hometown Hero", "description": "Defeat Hornet in Greenpath"},
+      {"api_name": "MAGE_KNIGHT", "name": "Soul Master", "description": "Defeat the Soul Master"},
+      {"api_name": "BROOD_STAND", "name": "The Great Husk骑士", "description": "Defeat Brooding Mawlek"}
+    ]
+  }
+}
