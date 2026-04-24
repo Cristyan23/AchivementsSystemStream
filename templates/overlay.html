@@ -411,6 +411,13 @@
             display: none;
         }
         
+        .site-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
         .waiting-logo {
             width: 180px;
             height: 180px;
@@ -424,6 +431,13 @@
             margin-bottom: 40px;
             box-shadow: 0 0 60px rgba(102, 192, 244, 0.4);
             animation: pulse 2s ease-in-out infinite;
+            overflow: hidden;
+        }
+        
+        .waiting-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         @keyframes pulse {
@@ -479,7 +493,7 @@
 <body>
     <!-- Waiting Screen -->
     <div class="waiting-screen" id="waiting-screen">
-        <div class="waiting-logo">🎮</div>
+        <div class="waiting-logo"><img id="waiting-avatar" src="https://avatars.steamstatic.com/933860e5e7817b0fcb301f52c49fe266328fec3d_full.jpg" alt="Avatar"></div>
         <div class="waiting-text">Esperando Você Dar o Play!</div>
         <div class="waiting-subtext">Inicie um jogo para ver as conquistas</div>
         <div class="waiting-game-hint">支持的 jogos: GTA San Andreas, PRAGMATA, Monster Hunter World, Resident Evil 2 e mais...</div>
@@ -507,7 +521,7 @@
     <div class="site-container">
         <!-- Header -->
         <header class="site-header">
-            <div class="site-logo">🎮</div>
+            <div class="site-logo"><img id="user-avatar" src="https://avatars.steamstatic.com/933860e5e7817b0fcb301f52c49fe266328fec3d_full.jpg" alt="Avatar"></div>
             <div class="site-info">
                 <div class="site-title">FanfasMestre</div>
                 <div class="site-subtitle">Perfil Steam</div>
