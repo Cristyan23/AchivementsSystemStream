@@ -31,7 +31,25 @@ Edite `config/config.json`:
 }
 ```
 
-Para encontrar o seu Steam ID (ID de 64 bits) no computador, abra a Steam, clique no seu nome de usuário no canto superior direito e selecione "Detalhes da conta". O número de 17 dígitos aparecerá logo abaixo do seu nome de usuário no topo da página. Alternativamente, vá em "Editar Perfil" e verifique o URL personalizado.
+Você pode encontrar o seu Steam ID (o número único que identifica sua conta) de várias formas simples, seja pelo aplicativo ou pelo navegador.
+
+Pelo aplicativo (Desktop):
+1. Clique no seu nome de usuário no canto superior direito.
+2. Selecione Detalhes da conta.
+3. O seu ID Steam estará listado logo abaixo do seu nome de usuário na parte superior da página.
+
+Pelo navegador:
+1. Acesse o site oficial da Steam (https://store.steampowered.com/) e faça login.
+2. Clique no seu nome de perfil e selecione Ver meu perfil.
+3. Olhe para a barra de endereços do navegador. O seu ID é a sequência numérica que aparece após /profiles/.
+
+Caso você tenha uma URL Personalizada:
+Se você definiu um nome personalizado, o número não aparecerá na barra de endereço. Para achá-lo:
+- Vá em Editar Perfil no seu perfil da Steam.
+- Se você apagar temporariamente o conteúdo do campo URL personalizada, a Steam mostrará o número do seu ID de 64 bits logo abaixo.
+
+Usando ferramentas externas:
+Se precisar do ID em outros formatos (como SteamID3 ou HEX), você pode copiar o link do seu perfil e colá-lo em sites como o Steam ID Finder ou o SteamRep (https://steamrep.com/).
 
 ## Uso
 
