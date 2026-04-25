@@ -31,7 +31,7 @@ Edite `config/config.json`:
 }
 ```
 
-Para obter seu Steam ID 64: https://steamid.io/
+Para encontrar o seu Steam ID (ID de 64 bits) no computador, abra a Steam, clique no seu nome de usuário no canto superior direito e selecione "Detalhes da conta". O número de 17 dígitos aparecerá logo abaixo do seu nome de usuário no topo da página. Alternativamente, vá em "Editar Perfil" e verifique o URL personalizado.
 
 ## Uso
 
